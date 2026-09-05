@@ -155,7 +155,7 @@ function App() {
         />
  
         <Route
-          path="/Users"
+          path="/users"
           element={<Users/>}
         />
 
