@@ -1,18 +1,4 @@
-
-import React, { useState } from "react";
-import {
-  BrowserRouter,
-  Link,
-  Routes,
-  Route,
-} from "react-router-dom";
-
-import Users from "./Page/Adminpage/Users";
-import Reports from "./Page/Adminpage/Reports";
-import Login from "./Page/Login";
-
-import "./App.css";
-
+import React, { useState } from 'react';
 import {
   LayoutDashboard,
   Users as UsersIcon,
@@ -43,6 +29,8 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import Reports from "./Reports";
+import Login from "../Login";
 
 
 const salesData = [
@@ -146,86 +134,6 @@ const ordersChartData = [
   },
 ];
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Login />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
-
-        <Route
-          path="/users"
-          element={<Users />}
-        />
-
-
-        <Route
-          path="/products"
-          element={
-            <SimplePage title="Products" />
-          }
-        />
-
-
-        <Route
-          path="/orders"
-          element={
-            <SimplePage title="Orders" />
-          }
-        />
-
-
-        <Route
-          path="/sales"
-          element={
-            <SimplePage title="Sales" />
-          }
-        />
-
-
-        <Route
-          path="/reports"
-          element={
-            <Reports></Reports>
-          }
-        />
-
-
-        <Route
-          path="/settings"
-          element={
-            <SimplePage title="Settings" />
-          }
-        />
-
-
-        <Route
-          path="/notifications"
-          element={
-            <SimplePage title="Notifications" />
-          }
-        />
-
-        <Route
-          path="*"
-          element={
-            <SimplePage title="Page Not Found" />
-          }
-        />
-
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
@@ -234,6 +142,7 @@ function Dashboard() {
     useState(false);
 
   return (
+
     <div className="app">
 
 
@@ -1428,9 +1337,5 @@ function QuickAction({
   );
 }
 
-// =====================================================
-// EXPORT
-// =====================================================
 
-export default App;
-
+export default Dashboard

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const Users = () => {
@@ -162,7 +162,7 @@ const Users = () => {
     );
 
     return (
-         
+
         <div className="min-h-screen bg-slate-50 p-6">
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
@@ -196,13 +196,15 @@ const Users = () => {
 
                     <div className="flex gap-3">
 
-                        <button
-                            className="px-5 py-2.5 rounded-xl border border-cyan-400
+                        <Link to ="App">
+                            <button
+                                className="px-5 py-2.5 rounded-xl border border-cyan-400
                          text-cyan-600 font-medium
                          hover:bg-cyan-50 transition shadow-sm"
-                        >
-                            Export
-                        </button>
+                            >
+                                Export
+                            </button>
+                        </Link>
 
 
                         <button
