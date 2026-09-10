@@ -1,13 +1,14 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Reports.css";
 
 function Reports() {
     return (
-        <div className="min-h-screen bg-blue-950 p-6">
+        <div className="reports-page min-h-screen p-6">
 
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="report-header flex items-center justify-between mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-white">
                         Reports
@@ -18,14 +19,14 @@ function Reports() {
                     </p>
                 </div>
 
-                <Link to="App">
+                <Link to="/dashboard">
                     <button className="bg-white text-blue-600 px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-50">
                         Export Report
                     </button></Link>
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+            <div className="summary-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
 
                 <div className="bg-blue-900 rounded-xl p-5 shadow-lg">
                     <p className="text-white text-sm">
@@ -102,7 +103,7 @@ function Reports() {
             </div>
 
             {/* Sales Report */}
-            <div className="bg-blue-800 rounded-xl shadow-lg p-6 mb-6">
+            <div className="sales-report bg-blue-800 rounded-xl shadow-lg p-6 mb-6">
 
                 <div className="flex justify-between items-center mb-6">
 
@@ -227,7 +228,7 @@ function Reports() {
             </div>
 
             {/* Bottom */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="report-bottom grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* Top Products */}
                 <div className="bg-white rounded-xl shadow-lg p-6">

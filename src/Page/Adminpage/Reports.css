@@ -1,0 +1,251 @@
+.reports-page {
+  min-height: 100vh;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(20, 92, 255, 0.14), transparent 30%),
+    #061331;
+}
+
+.report-header {
+  max-width: 1440px;
+  margin: 0 auto 28px;
+  gap: 24px;
+}
+
+.reports-page h1,
+.reports-page h2,
+.reports-page p {
+  margin-top: 0;
+}
+
+.reports-page h1 {
+  color: #f8fbff;
+  letter-spacing: -0.02em;
+}
+
+.report-header p {
+  color: #8da4d0;
+}
+
+.report-header a {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.report-header button {
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid #278eff;
+  background: #087fff;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.report-header button:hover {
+  background: #1b91ff;
+  transform: translateY(-1px);
+}
+
+.summary-grid,
+.sales-report,
+.report-bottom {
+  max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.summary-grid > div {
+  min-height: 128px;
+  padding: 18px;
+  border: 1px solid #18376b;
+  background: linear-gradient(145deg, #0d214c, #091b3d);
+  border-radius: 13px;
+}
+
+.summary-grid h2 {
+  color: #f4f7ff;
+}
+
+.summary-grid p:first-child {
+  color: #9ab0d8;
+}
+
+.summary-grid p:last-child {
+  color: #667fae;
+}
+
+.sales-report {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  padding: 22px;
+  border: 1px solid #18376b;
+  background: linear-gradient(145deg, #0d214c, #091a3c);
+}
+
+.sales-report h2 {
+  color: #f4f7ff;
+  font-size: 16px;
+}
+
+.sales-report p {
+  color: #7189b9;
+}
+
+.sales-report select {
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border-color: #244477;
+  background: #102653;
+  color: #c5d3ee;
+  outline: none;
+}
+
+.sales-report > .h-72 {
+  min-height: 288px;
+  border-color: #244477;
+  background: #081a3b;
+}
+
+.sales-report > .h-72 > div > span {
+  color: #8198c2;
+}
+
+.sales-report > .h-72 > div > div {
+  background: linear-gradient(180deg, #22d99f, #0fa87d);
+}
+
+.report-bottom > div {
+  min-height: 276px;
+  padding: 22px;
+  border-radius: 13px;
+  border: 1px solid #18376b;
+  background: linear-gradient(145deg, #0d214c, #091a3c);
+}
+
+.report-bottom h2 {
+  color: #f4f7ff;
+  font-size: 17px;
+}
+
+.report-bottom p {
+  color: #7189b9;
+  margin-top: 5px;
+}
+
+.report-bottom table {
+  width: 100%;
+  color: #c2d0e9;
+}
+
+.report-bottom thead tr,
+.report-bottom tbody tr {
+  border-color: #1a3768;
+}
+
+.report-bottom th {
+  padding: 10px 6px;
+  color: #8198c2;
+  font-weight: 500;
+  text-align: left;
+}
+
+.report-bottom td {
+  padding: 13px 6px;
+  color: #c2d0e9;
+  font-size: 12px;
+}
+
+.report-bottom td.font-semibold {
+  color: #f4f7ff;
+}
+
+.report-bottom .space-y-4 > div {
+  display: grid;
+  grid-template-columns: 1fr 64px 48px;
+  gap: 12px;
+  align-items: center;
+  min-height: 42px;
+  border-color: #1a3768;
+}
+
+.report-bottom .space-y-4 > div > span:first-child {
+  color: #c2d0e9;
+}
+
+.report-bottom .space-y-4 > div > span:nth-child(2) {
+  color: #f4f7ff;
+  text-align: right;
+}
+
+.report-bottom .space-y-4 > div > span:last-child {
+  min-width: 42px;
+  padding: 4px 7px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.report-bottom .space-y-4 > div > span[class*="bg-green-100"] {
+  color: #1bd39a;
+  background: rgba(27, 211, 157, 0.12);
+}
+
+.report-bottom .space-y-4 > div > span[class*="bg-blue-100"] {
+  color: #63b5ff;
+  background: rgba(35, 143, 255, 0.12);
+}
+
+.report-bottom .space-y-4 > div > span[class*="bg-yellow-100"] {
+  color: #ffc14d;
+  background: rgba(255, 193, 77, 0.12);
+}
+
+.report-bottom .space-y-4 > div > span[class*="bg-red-100"] {
+  color: #ff7088;
+  background: rgba(255, 112, 136, 0.12);
+}
+
+@media (max-width: 640px) {
+  .reports-page {
+    padding: 16px;
+  }
+
+  .report-header {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .report-header h1 {
+    font-size: 26px;
+  }
+
+  .report-header button {
+    padding: 9px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .sales-report {
+    padding: 18px;
+  }
+
+  .sales-report > .h-72 {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .report-bottom > div {
+    padding: 18px;
+  }
+
+  .report-bottom .space-y-4 > div {
+    grid-template-columns: 1fr 52px 44px;
+    gap: 8px;
+  }
+}

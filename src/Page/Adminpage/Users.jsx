@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Link } from 'react-router-dom';
 import { useState } from 'react';
+import "./User.css";
 
 const Users = () => {
 
@@ -163,7 +164,7 @@ const Users = () => {
 
     return (
 
-        <div className="min-h-screen bg-slate-50 p-6">
+        <div className="users-page min-h-screen p-6">
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
 
@@ -196,7 +197,7 @@ const Users = () => {
 
                     <div className="flex gap-3">
 
-                        <Link to ="App">
+                        <Link to="/dashboard">
                             <button
                                 className="px-5 py-2.5 rounded-xl border border-cyan-400
                          text-cyan-600 font-medium
@@ -551,14 +552,14 @@ const Users = () => {
             {show && (
 
                 <div
-                    className="fixed inset-0 bg-black/50
+                    className="user-modal fixed inset-0 bg-black/50
                      flex items-center justify-center
                      z-50 p-4"
                 >
 
                     <form
                         onSubmit={submitdata}
-                        className="w-full max-w-[420px]
+                        className="user-form w-full max-w-[420px]
                        bg-indigo-950 rounded-2xl
                        shadow-2xl p-6
                        max-h-[90vh] overflow-y-auto"

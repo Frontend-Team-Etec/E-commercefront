@@ -20,6 +20,7 @@ button {
 
 .app {
   min-height: 100vh;
+  color: #f4f7ff;
   background:
     radial-gradient(
       circle at 70% 0%,
@@ -27,6 +28,47 @@ button {
       transparent 35%
     ),
     #061331;
+}
+
+.simple-page {
+  min-height: 100vh;
+  padding: 40px;
+  display: grid;
+  place-items: center;
+  color: #f4f7ff;
+  background: #061331;
+}
+
+.simple-page-card {
+  width: min(100%, 640px);
+  padding: 40px;
+  border: 1px solid #18376b;
+  border-radius: 14px;
+  text-align: center;
+  background: linear-gradient(145deg, #0d214c, #091a3c);
+}
+
+.simple-page-card h1 {
+  color: #f8fbff;
+}
+
+.simple-page-card p {
+  margin-top: 10px;
+  color: #8da4d0;
+}
+
+.simple-page-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #168cff;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.simple-page-link:hover {
+  background: #1a91ff;
 }
 
 /* SIDEBAR */
