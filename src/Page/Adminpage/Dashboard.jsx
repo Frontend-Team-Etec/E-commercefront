@@ -30,7 +30,7 @@ import {
   Tooltip,
 } from "recharts";
 import Reports from "./Reports";
-import Login from "../Login";
+import Login from "../Auth/Login";
 
 
 const salesData = [

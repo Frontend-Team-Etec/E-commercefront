@@ -9,7 +9,7 @@ import {
 
 import Users from "./Page/Adminpage/Users";
 import Reports from "./Page/Adminpage/Reports";
-import Login from "./Page/Login";
+import Login from "./Page/Auth/Login";
 
 import "./App.css";
 
@@ -277,7 +277,7 @@ function Dashboard() {
           {/* DASHBOARD */}
 
           <Link
-            to="/"
+            to="/dashboard"
             className="menu-item active"
             onClick={() =>
               setSidebarOpen(false)
@@ -1293,22 +1293,9 @@ function Dashboard() {
 
 function SimplePage({ title }) {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "40px",
-        background: "#f5f7fb",
-      }}
-    >
+    <div className="simple-page">
 
-      <div
-        style={{
-          background: "white",
-          padding: "40px",
-          borderRadius: "20px",
-          textAlign: "center",
-        }}
-      >
+      <div className="simple-page-card">
 
         <h1>
           {title} Page
@@ -1319,16 +1306,8 @@ function SimplePage({ title }) {
         </p>
 
         <Link
-          to="/"
-          style={{
-            display: "inline-block",
-            marginTop: "20px",
-            padding: "10px 20px",
-            background: "#168cff",
-            color: "white",
-            borderRadius: "10px",
-            textDecoration: "none",
-          }}
+          to="/dashboard"
+          className="simple-page-link"
         >
           ← Back to Dashboard
         </Link>

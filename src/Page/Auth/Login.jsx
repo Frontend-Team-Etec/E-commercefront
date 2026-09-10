@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50">
+    <div className="login-page min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
 
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
