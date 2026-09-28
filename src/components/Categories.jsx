@@ -1,6 +1,8 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
+     const navigate = useNavigate();
     const categories = [{ name: "phone", image: "/Phone.jpg", products: "120+ Products", },
     { name: "Laptops", image: "/Laptop.jpg", products: "85+ Products", },
     { name: "Headphones", image: "/hero.jpg", products: "64+ Products", },
@@ -24,8 +26,12 @@ const Categories = () => {
                             <p className="text-gray-500 mt-3 max-w-lg"> Explore our wide range of products and find everything you need in one place. </p>
 
                         </div>
-
-                        <button className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition"> View All Categories → </button>
+                      <button
+                        onClick={() => navigate("dtail_categories")}
+                        className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition"
+                        >
+                        View All categories →
+                    </button>
                     </div>
 
                     {/* CATEGORY GRID */}

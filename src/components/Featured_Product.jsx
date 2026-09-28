@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
 const Featured_Product = () => {
+  const navigate = useNavigate();
+
      const products = [
   {
     id: 1,
@@ -61,9 +64,12 @@ const Featured_Product = () => {
   {/* Header */}
   <div className="flex items-center justify-between mb-10">
     <h2 className="text-3xl font-bold text-gray-900">Featured Products</h2>
-    <a href="#" className="text-blue-600 font-medium hover:underline">
-      View All Products →
-    </a>
+    <button
+         onClick={() => navigate("dtail_feature")}
+        className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition"
+          >
+        View All FeatureProduct →
+     </button>
   </div>
 
   {/* Products Grid */}
