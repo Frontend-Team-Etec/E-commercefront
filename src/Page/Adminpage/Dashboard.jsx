@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users as UsersIcon,
@@ -29,8 +30,6 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import Reports from "./Reports";
-import Login from "../Auth/Login";
 
 
 const salesData = [
@@ -186,7 +185,7 @@ function Dashboard() {
           {/* DASHBOARD */}
 
           <Link
-            to="/"
+            to="/dashboard"
             className="menu-item active"
             onClick={() =>
               setSidebarOpen(false)
@@ -212,7 +211,7 @@ function Dashboard() {
           {/* PRODUCTS */}
 
           <Link
-            to="/products"
+            to="/products/add"
             className="menu-item"
             onClick={() =>
               setSidebarOpen(false)
@@ -1037,7 +1036,7 @@ function Dashboard() {
               </div>
 
               <Link
-                to="/orders"
+                to="/dashboard"
                 className="view-btn"
               >
                 View All
@@ -1156,7 +1155,7 @@ function Dashboard() {
               icon={<Package />}
               title="Add Product"
               text="Create new product"
-              link="/products"
+              link="/products/add"
             />
 
             {/* ADD USER */}
@@ -1191,58 +1190,6 @@ function Dashboard() {
         </section>
 
       </main>
-
-    </div>
-  );
-}
-
-// =====================================================
-// SIMPLE PAGE
-// =====================================================
-
-function SimplePage({ title }) {
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "40px",
-        background: "#f5f7fb",
-      }}
-    >
-
-      <div
-        style={{
-          background: "white",
-          padding: "40px",
-          borderRadius: "20px",
-          textAlign: "center",
-        }}
-      >
-
-        <h1>
-          {title} Page
-        </h1>
-
-        <p>
-          This is the {title} page.
-        </p>
-
-        <Link
-          to="/"
-          style={{
-            display: "inline-block",
-            marginTop: "20px",
-            padding: "10px 20px",
-            background: "#168cff",
-            color: "white",
-            borderRadius: "10px",
-            textDecoration: "none",
-          }}
-        >
-          ← Back to Dashboard
-        </Link>
-
-      </div>
 
     </div>
   );

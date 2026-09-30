@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   BrowserRouter,
   Link,
@@ -7,9 +7,21 @@ import {
   Route,
 } from "react-router-dom";
 
-import Users from "./Page/Adminpage/Users";
-import Reports from "./Page/Adminpage/Reports";
-import Login from "./Page/Auth/Login";
+import Users from "./Adminpage/Users";
+import Reports from "./Adminpage/Reports";
+import Sales from "./Adminpage/Sales";
+import Addproduct from "./Adminpage/Addproduct";
+import OrderPage from "./Adminpage/Order";
+
+import Home from "./Pagetast/Home";
+import Products from "./Pagetast/Products";
+import Category from "./Pagetast/Catetogry";
+import ProductDetail from "./Pagetast/Productdetall";
+import Basket from "./Pagetast/Basket";
+import Order from "./Pagetast/Order";
+
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 
 import "./App.css";
 
@@ -150,76 +162,26 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<Login />}
-        />
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
 
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/add" element={<Addproduct />} />
+        <Route path="/orders" element={<OrderPage />} />
+        <Route path="/sales" element={<Sales />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/notifications" element={<SimplePage title="Notifications" />} />
 
-        <Route
-          path="/users"
-          element={<Users />}
-        />
+        <Route path="/category" element={<Category />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/basket" element={<Basket />} />
+        <Route path="/order" element={<Order />} />
 
-
-        <Route
-          path="/products"
-          element={
-            <SimplePage title="Products" />
-          }
-        />
-
-
-        <Route
-          path="/orders"
-          element={
-            <SimplePage title="Orders" />
-          }
-        />
-
-
-        <Route
-          path="/sales"
-          element={
-            <SimplePage title="Sales" />
-          }
-        />
-
-
-        <Route
-          path="/reports"
-          element={
-            <Reports></Reports>
-          }
-        />
-
-
-        <Route
-          path="/settings"
-          element={
-            <SimplePage title="Settings" />
-          }
-        />
-
-
-        <Route
-          path="/notifications"
-          element={
-            <SimplePage title="Notifications" />
-          }
-        />
-
-        <Route
-          path="*"
-          element={
-            <SimplePage title="Page Not Found" />
-          }
-        />
-
+        <Route path="*" element={<SimplePage title="Page Not Found" />} />
       </Routes>
     </BrowserRouter>
   );
@@ -303,7 +265,7 @@ function Dashboard() {
           {/* PRODUCTS */}
 
           <Link
-            to="/products"
+            to="/products/add"
             className="menu-item"
             onClick={() =>
               setSidebarOpen(false)
@@ -1247,7 +1209,7 @@ function Dashboard() {
               icon={<Package />}
               title="Add Product"
               text="Create new product"
-              link="/products"
+              link="/products/add"
             />
 
             {/* ADD USER */}
@@ -1314,6 +1276,99 @@ function SimplePage({ title }) {
 
       </div>
 
+    </div>
+  );
+}
+
+function SettingsPage() {
+  const [saved, setSaved] = useState(false);
+  const [settings, setSettings] = useState({
+    name: "Mark Johnson",
+    email: "mark.johnson@example.com",
+    timezone: "UTC+00:00",
+    emailNotifications: true,
+    orderAlerts: true,
+    compactMode: false,
+  });
+
+  const updateSetting = (event) => {
+    const { name, value, type, checked } = event.target;
+    setSettings((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    setSaved(false);
+  };
+
+  const saveSettings = (event) => {
+    event.preventDefault();
+    setSaved(true);
+  };
+
+  return (
+    <div className="settings-page">
+      <header className="settings-header">
+        <div>
+          <Link to="/dashboard" className="settings-back">Back to dashboard</Link>
+          <h1>Settings</h1>
+          <p>Manage your account and dashboard preferences.</p>
+        </div>
+        <Settings size={30} aria-hidden="true" />
+      </header>
+
+      <form className="settings-layout" onSubmit={saveSettings}>
+        <section className="settings-card">
+          <div className="settings-card-heading">
+            <div>
+              <h2>Account details</h2>
+              <p>Update the information used on your admin profile.</p>
+            </div>
+          </div>
+          <label>
+            Full name
+            <input name="name" value={settings.name} onChange={updateSetting} />
+          </label>
+          <label>
+            Email address
+            <input name="email" type="email" value={settings.email} onChange={updateSetting} />
+          </label>
+          <label>
+            Time zone
+            <select name="timezone" value={settings.timezone} onChange={updateSetting}>
+              <option>UTC+00:00</option>
+              <option>UTC-05:00</option>
+              <option>UTC+01:00</option>
+              <option>UTC+07:00</option>
+            </select>
+          </label>
+        </section>
+
+        <section className="settings-card">
+          <div className="settings-card-heading">
+            <div>
+              <h2>Preferences</h2>
+              <p>Choose which updates appear in your workspace.</p>
+            </div>
+          </div>
+          <label className="settings-toggle">
+            <span><strong>Email notifications</strong><small>Receive weekly account summaries.</small></span>
+            <input name="emailNotifications" type="checkbox" checked={settings.emailNotifications} onChange={updateSetting} />
+          </label>
+          <label className="settings-toggle">
+            <span><strong>Order alerts</strong><small>Get notified when an order needs attention.</small></span>
+            <input name="orderAlerts" type="checkbox" checked={settings.orderAlerts} onChange={updateSetting} />
+          </label>
+          <label className="settings-toggle">
+            <span><strong>Compact dashboard</strong><small>Show more data with less spacing.</small></span>
+            <input name="compactMode" type="checkbox" checked={settings.compactMode} onChange={updateSetting} />
+          </label>
+        </section>
+
+        <div className="settings-actions">
+          {saved && <span className="settings-saved">Settings saved</span>}
+          <button type="submit" className="settings-save">Save changes</button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -1407,9 +1462,7 @@ function QuickAction({
   );
 }
 
-// =====================================================
-// EXPORT
-// =====================================================
+
 
 export default App;
 
