@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FaHeart, FaSearch, FaStar } from "react-icons/fa";
-import { products } from "../data/products";
-import { addCartItem } from "../utils/cart";
+import { Heart, Search, Star } from "lucide-react";
+import { getProducts } from "../../data/products";
+import { addCartItem, getCartCount } from "../../utils/cart";
 
 const ProductDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [quantity, setQuantity] = useState(1);
+    const [cartCount, setCartCount] = useState(getCartCount);
+    const [addedToCart, setAddedToCart] = useState(false);
     const [selectedColor, setSelectedColor] = useState(() => {
-        const product = products.find((item) => item.id === Number(id));
+        const product = getProducts().find((item) => item.id === Number(id));
         return product?.colors?.[0] ?? "";
     });
 
-    const product = products.find((item) => item.id === Number(id));
+    const product = getProducts().find((item) => item.id === Number(id));
     const activeColor = product?.colors?.includes(selectedColor)
         ? selectedColor
         : product?.colors?.[0] ?? "";
+
+    useEffect(() => {
+        const updateCount = () => setCartCount(getCartCount());
+        window.addEventListener("cart-updated", updateCount);
+        return () => window.removeEventListener("cart-updated", updateCount);
+    }, []);
 
     const handleBuyNow = () => {
         navigate('/order', {
@@ -34,7 +42,7 @@ const ProductDetail = () => {
             quantity,
             color: activeColor,
         });
-        navigate('/basket');
+        setAddedToCart(true);
     };
 
     if (!product) {
@@ -55,7 +63,7 @@ const ProductDetail = () => {
                     <div className="text-4xl font-black tracking-tight">MyShop</div>
 
                     <nav className="hidden items-center gap-10 text-sm font-medium text-slate-200 md:flex">
-                        <Link to="/" className="hover:text-white">Home</Link>
+                        <Link to="/home" className="hover:text-white">Home</Link>
                         <Link to="/products" className="hover:text-white">Shop</Link>
                         <Link to="/category" className="hover:text-white">Category</Link>
                         <Link to="/" className="hover:text-white">Other</Link>
@@ -63,7 +71,7 @@ const ProductDetail = () => {
 
                     <div className="flex items-center gap-4">
                         <div className="relative hidden md:block">
-                            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search..."
@@ -71,9 +79,14 @@ const ProductDetail = () => {
                             />
                         </div>
 
-                        <button className="rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/20 transition hover:bg-red-500">
+                        <Link to="/basket" aria-label="View basket" className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-white text-xl text-slate-700 shadow-md">
+                            🛒
+                            <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white shadow-lg">{cartCount}</span>
+                        </Link>
+
+                        <Link to="/login" className="rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/20 transition hover:bg-red-500">
                             Login
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </header>
@@ -113,7 +126,7 @@ const ProductDetail = () => {
 
                             <div className="mt-4 flex items-center gap-2 text-slate-500">
                                 <span className="text-amber-400">
-                                    <FaStar />
+                                    <Star size={18} fill="currentColor" />
                                 </span>
                                 <span className="text-lg font-semibold text-slate-700">{product.rating}</span>
                                 <span className="text-sm">({product.reviews} view)</span>
@@ -184,7 +197,7 @@ const ProductDetail = () => {
                                     onClick={handleAddToCart}
                                     className="rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-500"
                                 >
-                                    Add to Cart
+                                    {addedToCart ? "Added to Cart" : "Add to Cart"}
                                 </button>
 
                                 <button
@@ -199,7 +212,7 @@ const ProductDetail = () => {
                                     className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-300 bg-white text-red-500 transition hover:border-red-200 hover:bg-red-50"
                                     aria-label="Wishlist"
                                 >
-                                    <FaHeart />
+                                    <Heart />
                                 </button>
                             </div>
                         </div>

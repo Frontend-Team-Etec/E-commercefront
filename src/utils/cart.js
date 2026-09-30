@@ -14,6 +14,11 @@ export const getCartItems = () => {
     }
 };
 
+export const getCartCount = () => getCartItems().reduce(
+    (total, item) => total + (item.quantity ?? 0),
+    0
+);
+
 export const saveCartItems = (items) => {
     if (typeof window === 'undefined') {
         return;

@@ -1,62 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { getUsers, saveUsers } from '../../utils/auth';
 import "./User.css";
 
 const Users = () => {
 
     const [show, setShow] = useState(false);
 
-    const [addData, setAddData] = useState([
-        {
-            id: 11,
-            name: "Dara",
-            email: "Dara@gmail.com",
-            role: "Manager",
-            image: "",
-        },
-        {
-            id: 12,
-            name: "Heng Sok",
-            email: "HengSok@gmail.com",
-            role: "User",
-            image: "",
-        },
-        {
-            id: 13,
-            name: "Dara Sok",
-            email: "Darasok@gmail.com",
-            role: "Manager",
-            image: "",
-        },
-        {
-            id: 14,
-            name: "Mengly",
-            email: "Mengly@gmail.com",
-            role: "Admin",
-            image: "",
-        },
-        {
-            id: 15,
-            name: "Sokphaha",
-            email: "Sokphaha@gmail.com",
-            role: "User",
-            image: "",
-        },
-        {
-            id: 16,
-            name: "Kun Tha",
-            email: "huntha@gmail.com",
-            role: "User",
-            image: "",
-        },
-        {
-            id: 17,
-            name: "Nita",
-            email: "Nita@gmail.com",
-            role: "User",
-            image: "",
-        },
-    ]);
+    const [addData, setAddData] = useState(getUsers);
+
+    useEffect(() => {
+        const refresh = () => setAddData(getUsers());
+        window.addEventListener("users-updated", refresh);
+        return () => window.removeEventListener("users-updated", refresh);
+    }, []);
+
+    const updateUsers = (updater) => {
+        const nextUsers = updater(addData);
+        saveUsers(nextUsers);
+        setAddData(nextUsers);
+    };
 
 
 
@@ -90,7 +54,7 @@ const Users = () => {
         e.preventDefault();
 
         if (editId !== null) {
-            setAddData((data) =>
+            updateUsers((data) =>
                 data.map((user) =>
                     user.id === editId
                         ? {
@@ -121,7 +85,7 @@ const Users = () => {
             image: image,
         };
 
-        setAddData((data) => [...data, users]);
+        updateUsers((data) => [...data, users]);
 
         resetForm();
         setShow(false);
@@ -150,7 +114,7 @@ const Users = () => {
         );
 
         if (confirmDelete) {
-            setAddData((data) =>
+            updateUsers((data) =>
                 data.filter((user) => user.id !== userId)
             );
         }

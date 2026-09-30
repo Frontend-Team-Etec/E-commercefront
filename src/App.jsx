@@ -7,21 +7,22 @@ import {
   Route,
 } from "react-router-dom";
 
-import Users from "./Adminpage/Users";
-import Reports from "./Adminpage/Reports";
-import Sales from "./Adminpage/Sales";
-import Addproduct from "./Adminpage/Addproduct";
-import OrderPage from "./Adminpage/Order";
+import Users from "./Page/Adminpage/Users";
+import Reports from "./Page/Adminpage/Reports";
+import Sales from "./Page/Adminpage/Sales";
+import Addproduct from "./Page/Adminpage/Addproduct";
+import OrderPage from "./Page/Adminpage/Order";
 
-import Home from "./Pagetast/Home";
-import Products from "./Pagetast/Products";
-import Category from "./Pagetast/Catetogry";
-import ProductDetail from "./Pagetast/Productdetall";
-import Basket from "./Pagetast/Basket";
-import Order from "./Pagetast/Order";
+import Home from "./Page/PageUser/Home";
+import Products from "./Page/PageUser/Products";
+import Category from "./Page/PageUser/Catetogry";
+import ProductDetail from "./Page/PageUser/Productdetall";
+import Basket from "./Page/PageUser/Basket";
+import Order from "./Page/PageUser/Order";
 
-import Login from "./Auth/Login";
-import Register from "./Auth/Register";
+import Login from "./Page/Auth/Login";
+import Register from "./Page/Auth/Register";
+
 
 import "./App.css";
 
@@ -163,6 +164,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
 
@@ -1465,4 +1467,3 @@ function QuickAction({
 
 
 export default App;
-

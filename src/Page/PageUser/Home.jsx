@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { products } from "../data/products";
-import { getCartItems } from "../utils/cart";
+import { getProducts, products } from "../../data/products";
+import { getCartCount } from "../../utils/cart";
 
 const categories = [
-    { name: "Laptop", icon: "💻", link: "/products" },
-    { name: "Audio", icon: "🎧", link: "/products" },
-    { name: "Wearables", icon: "⌚", link: "/products" },
-    { name: "Accessories", icon: "🎒", link: "/products" },
+    { name: "Laptop", icon: "💻", link: "/products?category=Laptop" },
+    { name: "Audio", icon: "🎧", link: "/products?category=Audio" },
+    { name: "Wearables", icon: "⌚", link: "/products?category=Wearables" },
+    { name: "Accessories", icon: "🎒", link: "/products?category=Accessories" },
 ];
 
-const featuredProducts = products.slice(0, 6);
-
 const Home = () => {
+    const [catalogue, setCatalogue] = useState(getProducts);
     const [cartCount, setCartCount] = useState(() =>
-        getCartItems().reduce((sum, item) => sum + item.quantity, 0)
+        getCartCount()
     );
 
     useEffect(() => {
         const updateCount = () => {
-            const items = getCartItems();
-            const total = items.reduce((sum, item) => sum + item.quantity, 0);
-            setCartCount(total);
+            setCartCount(getCartCount());
         };
 
         updateCount();
@@ -32,6 +29,16 @@ const Home = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const refreshProducts = () => setCatalogue(getProducts());
+        window.addEventListener("products-updated", refreshProducts);
+        return () => window.removeEventListener("products-updated", refreshProducts);
+    }, []);
+
+    const originalProductIds = new Set(products.map((product) => product.id));
+    const newProducts = catalogue.filter((product) => !originalProductIds.has(product.id));
+    const featuredProducts = [...products.slice(0, 6), ...newProducts];
+
     return (
         <div className="min-h-screen bg-slate-100 text-slate-800">
             <header className="bg-[#071d2f] text-white">
@@ -39,7 +46,7 @@ const Home = () => {
                     <div className="text-4xl font-black tracking-tight">MyShop</div>
 
                     <nav className="hidden items-center gap-9 text-sm font-medium text-slate-200 md:flex">
-                        <Link to="/" className="hover:text-white">Home</Link>
+                        <Link to="/home" className="hover:text-white">Home</Link>
                         <Link to="/products" className="hover:text-white">Shop</Link>
                         <Link to="/category" className="hover:text-white">Category</Link>
                         <Link to="/" className="hover:text-white">Other</Link>
@@ -179,6 +186,7 @@ const Home = () => {
                         ))}
                     </div>
                 </section>
+
             </main>
         </div>
     );

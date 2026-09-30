@@ -1,21 +1,25 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  font-family: inherit;
-}
+/* Keep the admin reset, but let Tailwind utility classes control page spacing. */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-button,
-input,
-select {
-  font-family: inherit;
-}
+  body {
+    font-family: inherit;
+  }
 
-button {
-  cursor: pointer;
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
 }
 
 .app {

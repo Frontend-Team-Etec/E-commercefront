@@ -1,48 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getProducts, saveProducts } from "../../data/products";
 import "./Addproduct.css";
 
 const Addproducts = () => {
     
     const [show, setShow] = useState(false);
 
-    const [adddata, setAdddata] = useState([
-        {
-            id: 1,
-            name: "Smart Watch",
-            price: 49.99,
-            qty: 10,
-            category: "Electronics",
-            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-            description: "Modern smart watch with many useful features."
-        },
-        {
-            id: 2,
-            name: "Sport Shoes",
-            price: 59.99,
-            qty: 20,
-            category: "Shoes",
-            image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-            description: "Comfortable shoes for running and sports."
-        },
-        {
-            id: 3,
-            name: "Camera",
-            price: 299.99,
-            qty: 5,
-            category: "Electronics",
-            image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99e",
-            description: "High quality camera for photography."
-        },
-        {
-            id: 4,
-            name: "Headphones",
-            price: 39.99,
-            qty: 15,
-            category: "Accessories",
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
-            description: "Wireless headphones with clear sound."
-        }
-    ]);
+    const [adddata, setAdddata] = useState(getProducts);
+
+    useEffect(() => {
+        const refresh = () => setAdddata(getProducts());
+        window.addEventListener("products-updated", refresh);
+        return () => window.removeEventListener("products-updated", refresh);
+    }, []);
+
+    const updateProducts = (updater) => {
+        const nextProducts = updater(adddata);
+        saveProducts(nextProducts);
+        setAdddata(nextProducts);
+    };
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -99,17 +75,23 @@ const Addproducts = () => {
 
         const productData = {
             id: editingId !== null ? editingId : Date.now(),
-            name: name,
+            name,
             price: Number(price),
-            qty: Number(qty),
-            category: category,
-            image: image,
-            description: description
+            oldPrice: Number(price),
+            discount: 0,
+            stock: Number(qty),
+            category,
+            image,
+            gallery: [image],
+            colors: ["Default"],
+            rating: 0,
+            reviews: 0,
+            description,
         };
 
         // Update
         if (editingId !== null) {
-            setAdddata((prev) =>
+            updateProducts((prev) =>
                 prev.map((product) =>
                     product.id === editingId
                         ? productData
@@ -122,7 +104,7 @@ const Addproducts = () => {
 
         // Add
         else {
-            setAdddata((prev) => [
+            updateProducts((prev) => [
                 ...prev,
                 productData
             ]);
@@ -140,7 +122,7 @@ const Addproducts = () => {
 
         setName(product.name);
         setPrice(product.price);
-        setQty(product.qty);
+        setQty(product.stock ?? product.qty ?? "");
         setCategory(product.category);
         setImage(product.image);
         setDescription(product.description);
@@ -155,7 +137,7 @@ const Addproducts = () => {
         );
 
         if (confirmDelete) {
-            setAdddata((prev) =>
+            updateProducts((prev) =>
                 prev.filter((product) => product.id !== id)
             );
         }
@@ -180,10 +162,11 @@ const Addproducts = () => {
 
             {/* FORM */}
             {show && (
-                <form
-                    onSubmit={submitdata} 
-                    className="bg-blue-950 rounded-2x1 fixed w-[600px] text-white shadow-xl p-6 mb-8 m-5 "
-                >
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
+                    <form
+                        onSubmit={submitdata}
+                        className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-blue-950 p-5 text-white shadow-2xl"
+                    >
 
                     <h2 className="text-2xl flex justify-items-center font-bold text-blue-400 mb-5">
                         {editingId !== null
@@ -263,21 +246,7 @@ const Addproducts = () => {
                                 Select Category
                             </option>
 
-                            <option value="Electronics">
-                                Electronics
-                            </option>
-
-                            <option value="Clothes">
-                                Clothes
-                            </option>
-
-                            <option value="Shoes">
-                                Shoes
-                            </option>
-
-                            <option value="Accessories">
-                                Accessories
-                            </option>
+                            {[...new Set(adddata.map((product) => product.category))].map((item) => <option key={item} value={item}>{item}</option>)}
                         </select>
 
                     </div>
@@ -363,7 +332,8 @@ const Addproducts = () => {
 
                     </div>
 
-                </form>
+                    </form>
+                </div>
             )}
 
             {/* TITLE */}
@@ -430,7 +400,7 @@ const Addproducts = () => {
                             </p>
 
                             <p className="text-gray-600 mt-1">
-                                Quantity: {product.qty}
+                                Quantity: {product.stock ?? product.qty}
                             </p>
 
                             <div className="flex items-center justify-between mt-5 gap-2">
@@ -476,4 +446,4 @@ const Addproducts = () => {
     );
 };
 
-export default Addproducts; 
+export default Addproducts;

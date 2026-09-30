@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../../utils/auth";
 import "./Login.css";
 
 function Register() {
@@ -30,8 +31,14 @@ function Register() {
             return;
         }
 
+        const result = registerUser(form);
+        if (!result.ok) {
+            alert(result.message);
+            return;
+        }
+
         alert("Registration successful. Please log in.");
-        navigate("/");
+        navigate("/login");
     };
 
     return (
@@ -132,7 +139,7 @@ function Register() {
 
                 <p className="text-center text-gray-500 mt-6">
                     Already have an account?{" "}
-                    <Link to="/" className="text-blue-600 cursor-pointer hover:underline">
+                    <Link to="/login" className="text-blue-600 cursor-pointer hover:underline">
                         Login
                     </Link>
                 </p>

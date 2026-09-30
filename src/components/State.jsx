@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const State = () => {
     const [count, setCount] = useState(0);
-    const [tak, setTak] = useState(0);
 
     const Sum = () => {
         console.log("Hello people welcome to form me!");

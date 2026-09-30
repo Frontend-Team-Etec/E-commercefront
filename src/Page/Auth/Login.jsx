@@ -1,6 +1,7 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../utils/auth";
 import "./Login.css";
 
 function Login() {
@@ -18,15 +19,13 @@ function Login() {
       return;
     }
 
-    // Admin -> Dashboard
-    if (role === "Admin") {
-      navigate("/dashboard");
+    const result = loginUser({ email, password, role });
+    if (!result.ok) {
+      alert(result.message);
+      return;
     }
 
-    // User -> home page with navbar
-    if (role === "User") {
-      navigate("/home");
-    }
+    navigate(role === "Admin" ? "/dashboard" : "/home");
   };
 
   return (

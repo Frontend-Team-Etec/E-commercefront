@@ -341,3 +341,22 @@ export const products = [
         colors: ["Gray", "Silver"],
     },
 ];
+
+const PRODUCT_KEY = "myshop_products";
+
+export const getProducts = () => {
+    if (typeof window === "undefined") return products;
+
+    try {
+        const saved = JSON.parse(window.localStorage.getItem(PRODUCT_KEY));
+        return Array.isArray(saved) ? saved : products;
+    } catch {
+        return products;
+    }
+};
+
+export const saveProducts = (items) => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(PRODUCT_KEY, JSON.stringify(items));
+    window.dispatchEvent(new Event("products-updated"));
+};

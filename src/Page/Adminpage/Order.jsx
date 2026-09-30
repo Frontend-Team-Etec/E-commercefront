@@ -1,60 +1,6 @@
-import React, { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getOrders } from "../../utils/orders";
 import "./Order.css";
-
-const orders = [
-    {
-        id: "#ORD-1024",
-        customer: "John Smith",
-        product: "Wireless Headphones",
-        date: "18 Sep 2026",
-        total: "$249.00",
-        status: "Paid",
-        shipping: "Delivered",
-    },
-    {
-        id: "#ORD-1023",
-        customer: "Sarah Lee",
-        product: "Smart Watch",
-        date: "16 Sep 2026",
-        total: "$189.00",
-        status: "Pending",
-        shipping: "Processing",
-    },
-    {
-        id: "#ORD-1022",
-        customer: "Michael Kim",
-        product: "Laptop Pro 14",
-        date: "14 Sep 2026",
-        total: "$1,299.00",
-        status: "Paid",
-        shipping: "Shipped",
-    },
-    {
-        id: "#ORD-1021",
-        customer: "Emma Wilson",
-        product: "Phone 15 Pro",
-        date: "12 Sep 2026",
-        total: "$899.00",
-        status: "Cancelled",
-        shipping: "Cancelled",
-    },
-    {
-        id: "#ORD-1020",
-        customer: "Dara Chan",
-        product: "Bluetooth Speaker",
-        date: "09 Sep 2026",
-        total: "$119.00",
-        status: "Paid",
-        shipping: "Delivered",
-    },
-];
-
-const summary = [
-    { label: "Total Orders", value: "1,248", detail: "+12.4% this week" },
-    { label: "Pending", value: "84", detail: "Needs review" },
-    { label: "Completed", value: "1,102", detail: "88.3% success rate" },
-    { label: "Revenue", value: "$48,240", detail: "+8.1% vs last month" },
-];
 
 const statusStyles = {
     Paid: "order-tag--paid",
@@ -71,6 +17,22 @@ const shippingStyles = {
 
 const OrderPage = () => {
     const [search, setSearch] = useState("");
+    const [orders, setOrders] = useState(getOrders);
+    useEffect(() => {
+        const refresh = () => setOrders(getOrders());
+        window.addEventListener("orders-updated", refresh);
+        return () => window.removeEventListener("orders-updated", refresh);
+    }, []);
+    const summary = useMemo(() => {
+        const completed = orders.filter((order) => order.status === "Paid").length;
+        const revenue = orders.reduce((total, order) => total + Number(order.total.replace(/[^0-9.]/g, "")), 0);
+        return [
+            { label: "Total Orders", value: orders.length, detail: "Orders received" },
+            { label: "Pending", value: orders.filter((order) => order.status === "Pending").length, detail: "Needs review" },
+            { label: "Completed", value: completed, detail: "Paid orders" },
+            { label: "Revenue", value: `$${revenue.toFixed(2)}`, detail: "Order revenue" },
+        ];
+    }, [orders]);
 
     const filteredOrders = orders.filter((order) => {
         const term = search.toLowerCase();

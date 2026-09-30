@@ -1,9 +1,16 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { clearCart, getCartItems } from '../utils/cart';
+import { clearCart, getCartItems } from '../../utils/cart';
 
 const Basket = () => {
     const navigate = useNavigate();
-    const cartItems = getCartItems();
+    const [cartItems, setCartItems] = useState(getCartItems);
+
+    useEffect(() => {
+        const refresh = () => setCartItems(getCartItems());
+        window.addEventListener('cart-updated', refresh);
+        return () => window.removeEventListener('cart-updated', refresh);
+    }, []);
 
     if (!cartItems.length) {
         return (

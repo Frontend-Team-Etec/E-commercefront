@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { clearCart, getCartItems } from "../utils/cart";
+import { clearCart, getCartItems } from "../../utils/cart";
+import { createOrder } from "../../utils/orders";
 
 const Order = () => {
     const location = useLocation();
-    const cartItems = location.state?.cartItems ?? getCartItems();
+    const cartItems = location.state?.product ? [] : (location.state?.cartItems ?? getCartItems());
     const orderItems = cartItems.length > 0
         ? cartItems
         : [{ product: location.state?.product, quantity: location.state?.quantity ?? 1, color: location.state?.color ?? "Default" }];
@@ -54,6 +55,7 @@ const Order = () => {
         }
 
         setIsSubmitted(true);
+        createOrder({ customer: formData.name, items: orderItems, total });
         clearCart();
     };
 
@@ -76,7 +78,7 @@ const Order = () => {
                     </p>
 
                     <Link
-                        to="/"
+                        to="/home"
                         className="mt-10 inline-flex items-center justify-center rounded-xl bg-[#1e7de8] px-10 py-5 text-2xl font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-[#166fd7]"
                     >
                         Continue shopping
