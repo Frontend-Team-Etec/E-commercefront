@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -23,9 +23,9 @@ function Login() {
       navigate("/dashboard");
     }
 
-    // User -> Users page
+    // User -> home page with navbar
     if (role === "User") {
-      navigate("/users");
+      navigate("/home");
     }
   };
 
@@ -102,9 +102,9 @@ function Login() {
 
         <p className="text-center text-gray-500 mt-6">
           Don't have an account?{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">
+          <Link to="/register" className="text-blue-600 hover:underline">
             Register
-          </span>
+          </Link>
         </p>
 
       </div>
